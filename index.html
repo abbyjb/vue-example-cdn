@@ -22,14 +22,14 @@
   <body>
     <!-- v-cloak will hide anything until everything is completely loaded -->
     <div id="app" v-cloak>
-      <login-form />
+      <!-- <login-form /> -->
 
       <input @keyup.enter="greet(message)" v-model="message"/>
 
       <hr />
 
       <button @click.prevent="toggleBox">Toggle Box</button>
-      <div v-if="isVisible" class="box"></div>
+      <test-box v-if="isVisible" ></test-box>
 
     </div>
   </body>
@@ -37,7 +37,7 @@
   <script src="https://unpkg.com/vue@next" ></script>
 
   <script>
-    const app = Vue.createApp({
+   const app = Vue.createApp({
       data() {
         return {
           message: "Hello Vue!",
@@ -53,6 +53,9 @@
         greet(greeting) {
           console.log(greeting)
         }
+      }, 
+      updated() {
+        console.log('updated')
       }
    })
 
@@ -122,6 +125,21 @@
         }
       }
     }
+   })
+
+   app.component('test-box', {
+    template: `
+      <div class="box"></div>
+    `,
+    created() {
+      console.log('created');
+    },
+    mounted() {
+      console.log('mounted');
+    },
+    unmounted() {
+      console.log('unmounted');
+    },
    })
 
    app.mount("#app")
