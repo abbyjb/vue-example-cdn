@@ -1,27 +1,46 @@
 <html>
   <head>
     <title>Vue CDN Example</title>
+    <style>
+      .box {
+        background-color: purple;
+        height: 200px;
+        width: 200px;
+      }
+
+      [v-cloak] {
+        display: none
+      }
+    </style>
   </head>
 
   <body>
-    <div id="app">{{ message }}</div>
+    <!-- v-cloak will hide anything until everything is completely loaded -->
+    <div id="app" v-cloak>
+      {{ message }}
+      <input v-model="message"/>
+
+      <hr />
+
+      <div v-if="isVisible" class="box"></div>
+      <div v-else-if="isVisible2" class="box"></div>
+      <div v-else class="box"></div>
+
+      <!-- v-show is pretty similar, but it will render a div with a display:none -->
+      <!-- v-show would be useful if you don't want to constantly add/remove from the div -->
+      <!-- <div v-show="isVisible" class="box"></div> -->
+    </div>
   </body>
 
-  <script type="importmap">
-    {
-      "imports": {
-        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
-      }
-    }
-  </script>
+  <script src="https://unpkg.com/vue@next" ></script>
 
-  <script type="module">
-    import { createApp } from 'vue'
-
-    const app = createApp({
+  <script>
+    const app = Vue.createApp({
       data() {
         return {
-          message: "Hello Vue!"
+          message: "Hello Vue!",
+          isVisible: true,
+          isVisible2: false,
         }
       }
    })
