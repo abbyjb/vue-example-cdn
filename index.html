@@ -11,13 +11,19 @@
       [v-cloak] {
         display: none
       }
+
+      input {
+        margin: 10px;
+        display: block;
+      }
     </style>
   </head>
 
   <body>
     <!-- v-cloak will hide anything until everything is completely loaded -->
     <div id="app" v-cloak>
-      {{ message }}
+      <login-form />
+
       <input @keyup.enter="greet(message)" v-model="message"/>
 
       <hr />
@@ -48,6 +54,30 @@
           console.log(greeting)
         }
       }
+   })
+
+   app.component('login-form', {
+    template: `
+      <form @submit.prevent="handleSubmit">
+        <h1>{{title}}</h1> 
+        <input type="email" v-model="email" />
+        <input type="password" v-model="password"/>
+        <button>Log in</button>
+      </form>
+    `,
+    data() {
+      return {
+        title: 'Login Form',
+        email: '',
+        password: ''
+      }
+    },
+
+    methods: {
+      handleSubmit() {
+        console.log(this.email, this.password);
+      }
+    }
    })
 
    app.mount("#app")
